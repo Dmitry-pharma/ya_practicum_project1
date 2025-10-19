@@ -1,0 +1,32 @@
+Оригинальная фраза,Урезанная фраза,Ожидаемое продолжение,Продолжение фразы модели LSTM,Продолжение фразы модели GRU,Продолжение фразы модели distilGPT2,rouge LSTM,rouge GRU,rouge distilGPT2,время генерации ответа LSTM,время генерации ответа GRU,время генерации ответа distilGPT2
+time to start work for the day,time to start work for the,day,and,reason, next,0.0,0.0,0.0,0.005,0.002,0.1024
+i miss school too i miss my yaya uniform,i miss school too i miss my,yaya uniform,and i miss,##rmostat, school too i,0.0,0.0,0.0,0.0289,0.0039,0.223
+on my way to work,on my way to,work,to,the, the,0.0,0.0,0.0,0.0076,0.0092,0.0746
+awful night after wonderful day grr i hate it when that happens,awful night after wonderful day grr i,hate it when that happens,myself to go to sleep,##wearwearwearwearwear, was in the car and,0.0,0.0,0.0,0.1089,0.0268,0.1983
+studying for english exam,studying for english,exam,that,math,.,0.0,0.0,0.0,0.006,0.002,0.0626
+bluh need ta sleep need ta clean which one sleep haha but i cant,bluh need ta sleep need ta clean,which one sleep haha but i cant,up at all i have to work in the,a lot of of of of of of of," up
+
+
+
+
+
+",0.125,0.0,0.0,0.1664,0.0185,0.2525
+got my subwayyyyyy i still want my yogurt,got my subwayyyyyy i still want my,yogurt,but i don,sunglasses and and, car,0.0,0.0,0.0,0.0292,0.004,0.0768
+i never win raffles but i won the raffle dulce for the culture crawl what did i win a tie and a pocketsquare no 700 handbag for me,i never win raffles but i won,the raffle dulce for the culture crawl what did i win a tie and a pocketsquare no 700 handbag for me,i have to be up in a few hours and i have to get a chance to talk to him and i have a bath then,be able to see you you you you you you you you you you you you you you you you you you you you you you, the first round. i was a little nervous and i was really nervous. i was really nervous. i was really nervous. i was,0.1702,0.0,0.1818,0.3032,0.0329,0.7302
+what is with me and hittingclose calls when driving but more importantly rest in peace big moose my heart hurts for you ur family,what is with me and hittingclose calls,when driving but more importantly rest in peace big moose my heart hurts for you ur family,thats in the same place and i have no idea how to get it to d,i canttttttttttttttt,".”
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+",0.0606,0.0,0.0,0.0323,0.0336,0.5579
+oh god got peeling arms chest and face its the geordie sun that did it,oh god got peeling arms chest and,face its the geordie sun that did it,shoes though and i have to go to the work,uploadloadloadloadloadloadloadloadload," legs and then he was like, 'Oh,",0.1111,0.0,0.0,0.0955,0.01,0.4253
