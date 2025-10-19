@@ -14,8 +14,9 @@ sprint 2 final project
 ```plaintext
 ya_practicum_project1/
 ├── data/                            # Датасеты
-│   ├── 1_raw_dataset_tweets.txt     # "сырой" скачанный датасет
-│   └── 2_cleaned_dataset_tweets.csv # "очищенный" датасет, для отладки содержит raw_text и cleaned text
+│   ├── 1_raw_dataset_tweets.txt     # "сырой" скачанный датасет (не размещен)
+│   ├── 2_cleaned_dataset_tweets.csv # "очищенный" датасет, для отладки содержит raw_text и cleaned text (не размещен)
+│   └── test_dataset.csv             # сохраненная версия тестового сэмпла
 │
 ├── src/                             # Весь код проекта
 │   ├── data_utils.py                # Обработка датасета
@@ -23,12 +24,11 @@ ya_practicum_project1/
 │   ├── lstm_model.py                # код lstm модели
 |   ├── eval_lstm.py                 # замер метрик lstm модели
 |   ├── lstm_train.py                # код обучения модели
-|   ├── eval_transformer_pipeline.py # код с запуском и замером качества трансформера
 |   ├── visualization.py             # код визуализации - подготовка графиков результатов обучения
 │   ├── test_models.py               # сравненеие моделей по метрикам
 │   └── test_models_table.py         # подготовка таблицы с входом и выходом моделей для анализа
 │
-├── models/                          # веса обученных моделей
+├── models/                          # веса обученных моделей (не размещены)
 |
 ├── results/                         # итоги сравнения в виде эксель файла
 │
