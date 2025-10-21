@@ -45,72 +45,6 @@ def load_and_clean_data(file_path, limit=10000):
     print("Cleaning READY!")
     return texts_df
 
-def prepare_training_pairs(texts_df, tokenizer, MAX_LEN=20):
-    print("Preparing X, Y pairs...")
-    data = []
-    
-    for text in tqdm(texts_df['text_cleaned']):
-        tokens = tokenizer.tokenize(text)
-        if len(tokens) < 2:
-            continue
-            
-        for i in range(1, len(tokens)):
-            start_idx = max(0, i - MAX_LEN)
-            x_tok = tokens[start_idx:i]
-            y_tok = tokens[start_idx+1:i+1]
-            
-            if len(x_tok) < 1 or len(y_tok) < 1:
-                continue
-                
-            x_ids = tokenizer.convert_tokens_to_ids(x_tok)
-            y_ids = tokenizer.convert_tokens_to_ids(y_tok)
-            
-            x_padded = [tokenizer.pad_token_id] * (MAX_LEN - len(x_ids)) + x_ids
-            y_padded = [tokenizer.pad_token_id] * (MAX_LEN - len(y_ids)) + y_ids
-            attention_mask = [1 if token_id != tokenizer.pad_token_id else 0 for token_id in x_padded]
-            
-            data.append((x_padded, y_padded, attention_mask))
-    
-    print("PAIRS ARE READY!")
-    return data
-
-def prepare_training_pairs2(texts_df, tokenizer, MAX_LEN=20):
-    print("Preparing X, Y pairs...")
-    data = []
-    
-    for text in tqdm(texts_df['text_cleaned']):
-        tokens = tokenizer.tokenize(text)
-        if len(tokens) < 2:
-            continue
-            
-        # Разбиваем на последовательности фиксированной длины
-        for i in range(0, len(tokens) - MAX_LEN, MAX_LEN // 2):  # Перекрытие 50%
-            chunk = tokens[i:i + MAX_LEN + 1]  # +1 для целевого токена
-            
-            if len(chunk) < 2:
-                continue
-                
-            # X: все токены кроме последнего, Y: все токены кроме первого
-            x_tok = chunk[:-1]  # Контекст
-            y_tok = chunk[1:]   # Следующие слова
-            
-            x_ids = tokenizer.convert_tokens_to_ids(x_tok)
-            y_ids = tokenizer.convert_tokens_to_ids(y_tok)
-            
-            # Паддинг если необходимо (для последних чанков)
-            if len(x_ids) < MAX_LEN:
-                x_padded = x_ids + [tokenizer.pad_token_id] * (MAX_LEN - len(x_ids))
-                y_padded = y_ids + [tokenizer.pad_token_id] * (MAX_LEN - len(y_ids))
-            else:
-                x_padded = x_ids[:MAX_LEN]
-                y_padded = y_ids[:MAX_LEN]
-                
-            attention_mask = [1 if token_id != tokenizer.pad_token_id else 0 for token_id in x_padded]
-            
-            data.append((x_padded, y_padded, attention_mask))
-    
-    print(f"Created {len(data)} training pairs")
-    return data
 
 def prepare_training_pairs3(texts_df, tokenizer, MAX_LEN=20):
     print("Preparing X, Y pairs...")
@@ -159,31 +93,7 @@ def prepare_training_pairs3(texts_df, tokenizer, MAX_LEN=20):
     return data
 
 
-def create_test_dataset(file_path, limit=1000, max_len=20):
-    """Создает тестовую выборку на 1000 записей"""
-    print("📊 Создание тестовой выборки...")
-    
-    # Загрузка и очистка данных
-    texts_df = load_and_clean_data(file_path, limit)
-    
-    # Используем BertTokenizer для LSTM модели
-    lstm_tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
-    
-    # Подготовка данных для LSTM
-    data = prepare_training_pairs(texts_df, lstm_tokenizer, max_len)
-    
-    # Используем все данные для тестирования (не разделяем на train/test)
-    test_data = data
-    
-    X_test, Y_test, M_test = zip(*test_data)
-    
-    # Создаем dataset и loader для LSTM
-    test_ds = TweetsDataset(X_test, Y_test, M_test)
-    test_loader = DataLoader(test_ds, batch_size=64, shuffle=False)
-    
-    print(f"✅ Тестовая выборка создана: {len(test_ds)} примеров")
-    
-    return test_loader, lstm_tokenizer, texts_df
+
 
 # Функция для сохранения датасетов
 def save_file(dataset, file_path):
