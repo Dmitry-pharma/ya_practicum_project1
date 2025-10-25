@@ -165,62 +165,62 @@ def test_model(model, loader, criterion, device):
     
     return accuracy, avg_loss
 
-#расширенная версия test_model
-def test_lstm_model(model_path, test_loader, tokenizer, device):
-    """Тестирует LSTM модель на тестовой выборке"""
-    print("\n" + "="*60)
-    print("🧠 ТЕСТИРОВАНИЕ LSTM МОДЕЛИ")
-    print("="*60)
+# #расширенная версия test_model
+# def test_lstm_model(model_path, test_loader, tokenizer, device):
+#     """Тестирует LSTM модель на тестовой выборке"""
+#     print("\n" + "="*60)
+#     print("🧠 ТЕСТИРОВАНИЕ LSTM МОДЕЛИ")
+#     print("="*60)
     
-    # Загружаем конфигурацию модели
-    checkpoint = torch.load(model_path, map_location=device)
-    model_config = checkpoint['model_config']
+#     # Загружаем конфигурацию модели
+#     checkpoint = torch.load(model_path, map_location=device)
+#     model_config = checkpoint['model_config']
     
-    # Создаем модель
-    model = NextPhrasePredictionRNN(
-        rnn_type="LSTM",
-        vocab_size=model_config['vocab_size'],
-        emb_dim=model_config['emb_dim'],
-        hidden_dim=model_config['hidden_dim'],
-        pad_idx=model_config['pad_idx'],
-        num_layers=model_config['num_layers']
-    ).to(device)
+#     # Создаем модель
+#     model = NextPhrasePredictionRNN(
+#         rnn_type="LSTM",
+#         vocab_size=model_config['vocab_size'],
+#         emb_dim=model_config['emb_dim'],
+#         hidden_dim=model_config['hidden_dim'],
+#         pad_idx=model_config['pad_idx'],
+#         num_layers=model_config['num_layers']
+#     ).to(device)
     
-    # Загружаем веса
-    model.load_state_dict(checkpoint['model_state_dict'])
+#     # Загружаем веса
+#     model.load_state_dict(checkpoint['model_state_dict'])
     
-    # Критерий для оценки
-    criterion = torch.nn.CrossEntropyLoss(ignore_index=model_config['pad_idx'])
+#     # Критерий для оценки
+#     criterion = torch.nn.CrossEntropyLoss(ignore_index=model_config['pad_idx'])
     
-    # Тестируем модель
-    test_accuracy, test_loss = test_model(model, test_loader, criterion, device)
+#     # Тестируем модель
+#     test_accuracy, test_loss = test_model(model, test_loader, criterion, device)
     
-    # Детальная оценка с ROUGE метриками
-    accuracy, avg_loss, rouge_metrics = vevaluate3(
-        model, test_loader, criterion, device, tokenizer, 
-        compute_rouge=True, num_rouge_examples=100
-    )
+#     # Детальная оценка с ROUGE метриками
+#     accuracy, avg_loss, rouge_metrics = vevaluate3(
+#         model, test_loader, criterion, device, tokenizer, 
+#         compute_rouge=True, num_rouge_examples=100
+#     )
     
-    print(f"\n📊 Детальные результаты LSTM:")
-    print(f"   Test Accuracy: {accuracy:.4f}")
-    print(f"   Test Loss: {avg_loss:.4f}")
-    if rouge_metrics and 'rouge1' in rouge_metrics:
-        print(f"   ROUGE-1: {rouge_metrics['rouge1']:.4f}")
-        print(f"   ROUGE-2: {rouge_metrics['rouge2']:.4f}")
-        print(f"   ROUGE-L: {rouge_metrics['rougeL']:.4f}")
+#     print(f"\n📊 Детальные результаты LSTM:")
+#     print(f"   Test Accuracy: {accuracy:.4f}")
+#     print(f"   Test Loss: {avg_loss:.4f}")
+#     if rouge_metrics and 'rouge1' in rouge_metrics:
+#         print(f"   ROUGE-1: {rouge_metrics['rouge1']:.4f}")
+#         print(f"   ROUGE-2: {rouge_metrics['rouge2']:.4f}")
+#         print(f"   ROUGE-L: {rouge_metrics['rougeL']:.4f}")
     
-    # Анализ предсказаний
-    bad_cases, good_cases = analyze_predictions(model, test_loader, tokenizer, device)
+#     # Анализ предсказаний
+#     bad_cases, good_cases = analyze_predictions(model, test_loader, tokenizer, device)
     
-    # Детальные примеры
-    show_detailed_examples(model, test_loader, tokenizer, num_examples=3)
+#     # Детальные примеры
+#     show_detailed_examples(model, test_loader, tokenizer, num_examples=3)
     
-    return {
-        'accuracy': accuracy,
-        'loss': avg_loss,
-        'rouge_metrics': rouge_metrics,
-        'model_type': 'LSTM'
-    }
+#     return {
+#         'accuracy': accuracy,
+#         'loss': avg_loss,
+#         'rouge_metrics': rouge_metrics,
+#         'model_type': 'LSTM'
+#     }
 
 def analyze_predictions(model, loader, tokenizer, device, num_examples=5):
     model.eval()
